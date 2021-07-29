@@ -18,7 +18,8 @@ function selectRoom($modal, error) {
   // If Room name is provided as a URL parameter, pre-populate the Room name field.
   const { roomName } = getUrlParams();
   if (roomName) {
-    $roomName.val("123-456-789");
+    $roomName.val(roomName);
+    console.log(roomName);
   }
 
   // If any previously saved user name exists, pre-populate the user name field.

@@ -3,15 +3,19 @@
 const { connect, createLocalVideoTrack, Logger } = require('twilio-video');
 const { isMobile } = require('./browser');
 const helpers = require('./helpers');
+const {getUrlParams} = require("../public");
 const $stopscreencapture =$('#stopscreencapture');
 const $screen_share = $('#screen-share');
 
 const $leave = $('#leave-room');
+const $camera = $('#stopVideo');
+const $invite = $('#inviteButton');
+const $mute = $('#muteButton');
 const $room = $('#room');
 const $activeParticipant = $('div#active-participant > div.participant.main', $room);
 const $activeVideo = $('video', $activeParticipant);
 const $participants = $('div#participants', $room);
-
+const $stopVideo = $('button#stopVideo');
 // The current active Participant in the Room.
 let activeParticipant = null;
 
@@ -287,8 +291,39 @@ async function joinRoom(token, connectOptions) {
     $leave.off('click', onLeave);
     room.disconnect();
   });
-  let screenTrack;
 
+  //disable and enable camera for video call
+  $camera.click(async function () {
+    if($camera.css('background-color')=="rgb(255, 0, 0)"){
+      localVideoTrack.enable();
+      $camera.removeClass('optionsButton');
+      $camera.addClass('options__button');
+    }
+    else{
+      localVideoTrack.disable();
+      await room.localParticipant.unpublishTrack(localVideoTrack);
+      $camera.removeClass('options__button');
+      $camera.addClass('optionsButton');
+    }
+  })
+  //generate invite link
+  $invite.click(function () {
+    prompt("Meeting Link : ",window.location.href);
+  })
+
+  //enable and disable mic in video call
+  $mute.click(function onStopVideo() {
+    if($mute.css('background-color')=="rgb(255, 0, 0)"){
+      $mute.removeClass('optionsButton');
+      $mute.addClass('options__button');
+    }
+    else{
+      $mute.removeClass('options__button');
+      $mute.addClass('optionsButton');
+    }
+  })
+
+  let screenTrack;
   $screen_share.click(async function() {
     try {
         localVideoTrack.stop();
@@ -317,7 +352,6 @@ async function joinRoom(token, connectOptions) {
   $stopscreencapture.click(async function () {
     screenTrack.stop();
     await room.localParticipant.unpublishTrack(screenTrack);
-
   }); 
 
   return new Promise((resolve, reject) => {

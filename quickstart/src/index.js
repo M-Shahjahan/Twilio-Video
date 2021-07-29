@@ -8,9 +8,10 @@ const micLevel = require('./miclevel');
 const selectMedia = require('./selectmedia');
 const selectRoom = require('./selectroom');
 const showError = require('./showerror');
-
+const stopCamera = require('./stopCamera');
 
 const $modals = $('#modals');
+
 const $selectMicModal = $('#select-mic', $modals);
 const $selectCameraModal = $('#select-camera', $modals);
 const $showErrorModal = $('#show-error', $modals);
@@ -119,6 +120,7 @@ async function selectCamera() {
       return;
     }
   }
+  await stopVideo();
   return selectAndJoinRoom();
 }
 
@@ -140,9 +142,12 @@ async function selectMicrophone() {
   }
   return selectCamera();
 }
-
+async function stopVideo(){
+  await stopCamera();
+}
 // If the current browser is not supported by twilio-video.js, show an error
 // message. Otherwise, start the application.
 window.addEventListener('load', isSupported ? selectMicrophone : () => {
   showError($showErrorModal, new Error('This browser is not supported.'));
 });
+

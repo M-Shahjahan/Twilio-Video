@@ -1,3 +1,10 @@
+:root {
+  --main-darklg: #1d2635;
+  --main-dark: #161d29;
+  --primary-color: #2f80ec;
+  --main-light: #eeeeba;
+  font-family: "Poppins", sans-serif;
+}
 html {
   height: 100%;
 }
@@ -36,7 +43,7 @@ div.participant.main {
 }
 
 div.participant.main > video {
-  height: 720px;
+  height: 820px;
 }
 
 div.participant.active {
@@ -83,4 +90,55 @@ div.participant.main::before {
   div.participant.main > video {
     height: 270px;
   }
+}
+.options {
+  padding: 1rem;
+  display: flex;
+
+}
+
+.optionsLeft {
+  display: flex;
+  margin-top: auto;
+}
+
+.optionsRight {
+  margin-top: auto;
+}
+
+.options__button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--primary-color);
+  height: 50px;
+  border-radius: 5px;
+  color: white;
+  font-size: 1.2rem;
+  width: 50px;
+  margin: 0 0.5rem;
+}
+.options__button:hover {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--main-light);
+  height: 50px;
+  border-radius: 5px;
+  color: var(--primary-color);
+  font-size: 1.2rem;
+  width: 50px;
+  margin: 0 0.5rem;
+}
+.optionsButton{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: red;
+  height: 50px;
+  border-radius: 5px;
+  color: white;
+  font-size: 1.2rem;
+  width: 50px;
+  margin: 0 0.5rem;
 }

@@ -4,6 +4,8 @@
     <title>Twilio Video QuickStart</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://kit.fontawesome.com/c939d0e917.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
   </head>
   <body>
@@ -32,6 +34,24 @@
         <div id="active-participant" class="col-xs-12 col-sm-9 col-md-10" style="text-align: center">
           <div class="participant main">
             <video autoplay playsinline muted></video>
+
+          </div>
+          <div class="options">
+            <div class="optionsLeft">
+              <button id="stopVideo" class="options__button">
+                <i class="fa fa-video-camera"></i>
+              </button>
+              <button id="muteButton" class="options__button">
+                <i class="fa fa-microphone"></i>
+              </button>
+            </div>
+            <div class="optionsRight">
+              <button id="inviteButton" class="options__button">
+                <i class="fas fa-user-plus"></i>
+              </button>
+
+            </div>
+          </div>
           </div>
         </div>
       </div>
@@ -87,7 +107,7 @@
               <div class="modal-body">
                 <div class="form-group">
                   <label id="room-name-label" for="room-name">Room Name</label>
-                  <input id="room-name" class="form-control" type="text" />
+                  <input id="room-name" class="form-control" type="text"/>
                 </div>
                 <div class="form-group">
                   <label id="screen-name-label" for="screen-name">User Name</label>
@@ -124,6 +144,13 @@
 </html>
 <script>
   $(document).ready(function(){
-    $("#room-name").val(Date.now().toString(36) + Math.random().toString(36).substr(2));
+    var parser = document.createElement("a");
+    parser.href=window.location.href;
+    if(parser.search==""){
+      $("#room-name").val(Date.now().toString(36) + Math.random().toString(36).substr(2));
+    }
+    else{
+      $('#room-name').val(parser.search.substr(10));
+    }
   })
 </script>
