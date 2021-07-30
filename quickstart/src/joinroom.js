@@ -296,14 +296,18 @@ async function joinRoom(token, connectOptions) {
   $camera.click(async function () {
     if($camera.css('background-color')=="rgb(255, 0, 0)"){
       localVideoTrack.enable();
+      await room.localParticipant.publishTrack(localVideoTrack);
       $camera.removeClass('optionsButton');
       $camera.addClass('options__button');
+      $camera.html('<i class="fas fa-video"></i>');
     }
     else{
       localVideoTrack.disable();
+      localVideoTrack.detach();
       await room.localParticipant.unpublishTrack(localVideoTrack);
       $camera.removeClass('options__button');
       $camera.addClass('optionsButton');
+      $camera.html('<i class="fas fa-video-slash"></i>');
     }
   })
   //generate invite link
@@ -316,10 +320,19 @@ async function joinRoom(token, connectOptions) {
     if($mute.css('background-color')=="rgb(255, 0, 0)"){
       $mute.removeClass('optionsButton');
       $mute.addClass('options__button');
+      $mute.html('<i class="fa fa-microphone"></i>');
+      room.localParticipant.audioTracks.forEach(publication => {
+        publication.track.enable();
+      });
     }
     else{
+
       $mute.removeClass('options__button');
       $mute.addClass('optionsButton');
+      $mute.html('<i class="fa fa-microphone-slash"></i>');
+      room.localParticipant.audioTracks.forEach(publication => {
+        publication.track.disable();
+      });
     }
   })
 
