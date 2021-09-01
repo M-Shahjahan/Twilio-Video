@@ -1,6 +1,5 @@
-function stopCamera() {
-
+function stopCamera(){
 
 }
 
-module.exports =stopCamera;
+module.exports = stopCamera;

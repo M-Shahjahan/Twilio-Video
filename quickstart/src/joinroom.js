@@ -291,12 +291,14 @@ async function joinRoom(token, connectOptions) {
     $leave.off('click', onLeave);
     room.disconnect();
   });
-
+  let track=localVideoTrack;
+  await track.restart({ facingMode: 'environment' });
   //disable and enable camera for video call
   $camera.click(async function () {
     if($camera.css('background-color')=="rgb(255, 0, 0)"){
-      localVideoTrack.enable();
-      await room.localParticipant.publishTrack(localVideoTrack);
+      await track.restart({ facingMode: 'environment' });
+      track.enable();
+      await room.localParticipant.publishTrack(track);
       $camera.removeClass('optionsButton');
       $camera.addClass('options__button');
       $camera.html('<i class="fas fa-video"></i>');
@@ -304,6 +306,7 @@ async function joinRoom(token, connectOptions) {
     else{
       localVideoTrack.disable();
       localVideoTrack.detach();
+      localVideoTrack.stop();
       await room.localParticipant.unpublishTrack(localVideoTrack);
       $camera.removeClass('options__button');
       $camera.addClass('optionsButton');
